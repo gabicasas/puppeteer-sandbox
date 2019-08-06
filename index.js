@@ -40,7 +40,7 @@ http.createServer((req, resp) => {
             var postDataObject = JSON.parse(postData);
             let filename=postDataObject.filename;
             let code=postDataObject.code;
-            vm.runInThisContext(code);
+            vm.runInThisContext('(function(require) {'+code+'})')(require);
             resp.end('++'+JSON.stringify(postDataObject)+'++');
         })
     }

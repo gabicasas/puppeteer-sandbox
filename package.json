@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/gabicasas/puppeteer-sandbox/issues"
   },
-  "homepage": "https://github.com/gabicasas/puppeteer-sandbox#readme"
+  "homepage": "https://github.com/gabicasas/puppeteer-sandbox#readme",
+  "dependencies": {
+    "puppeteer": "^1.19.0"
+  }
 }
