@@ -1,0 +1,19 @@
+{
+  "name": "puppeteer-sandbox",
+  "version": "1.0.0",
+  "description": "Sandbox de para ejecutar componentes que generar un flujo de datos de una web bajo puppeteer",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabicasas/puppeteer-sandbox.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gabicasas/puppeteer-sandbox/issues"
+  },
+  "homepage": "https://github.com/gabicasas/puppeteer-sandbox#readme"
+}
