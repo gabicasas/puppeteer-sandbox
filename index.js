@@ -47,10 +47,11 @@ http.createServer((req, resp) => {
             var postDataObject = JSON.parse(postData);
             let filename=postDataObject.filename;
             let code=postDataObject.code;
-            vm.runInThisContext('(function(require) {const PUPPETEER_OPTS='+JSON.stringify(PUPPETEER_OPTS)+'; function '+postDataObject.functionName+'(){'+code+'};'+postDataObject.functionName+'()}); ')(require);
+            let functionDefinition='function '+postDataObject.functionName+'(){'+code+'}';
+            vm.runInThisContext('(function(require) {const PUPPETEER_OPTS='+JSON.stringify(PUPPETEER_OPTS)+'; '+functionDefinition+''+postDataObject.functionName+'()}); ')(require);
             //vm.runInThisContext('model()')
             resp.end('++'+JSON.stringify(postDataObject)+'++');
-            fs.writeFile(filename, code, function(err) {
+            fs.writeFile(filename, functionDefinition, function(err) {
                 if(err) {
                     return console.log(err);
                 }
