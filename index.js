@@ -1,5 +1,6 @@
 'use strict';
 const vm = require('vm');
+const fs = require('fs');
 
 /*const code = `
 (function(require) {
@@ -16,6 +17,12 @@ const vm = require('vm');
 vm.runInThisContext(code)(require);*/
 const http = require('http');
 var url = require('url');
+
+const PUPPETEER_OPTS = {
+    headless: false,
+    slowMo: { default: 300, click: 200, keyup: 10 },
+    devtools: false,
+}
 
 http.createServer((req, resp) => {
     var method = req.method;
@@ -40,8 +47,16 @@ http.createServer((req, resp) => {
             var postDataObject = JSON.parse(postData);
             let filename=postDataObject.filename;
             let code=postDataObject.code;
-            vm.runInThisContext('(function(require) {'+code+'})')(require);
+            vm.runInThisContext('(function(require) {const PUPPETEER_OPTS='+JSON.stringify(PUPPETEER_OPTS)+'; function '+postDataObject.functionName+'(){'+code+'};'+postDataObject.functionName+'()}); ')(require);
+            //vm.runInThisContext('model()')
             resp.end('++'+JSON.stringify(postDataObject)+'++');
+            fs.writeFile(filename, code, function(err) {
+                if(err) {
+                    return console.log(err);
+                }
+            
+                console.log("The file was saved!");
+            }); 
         })
     }
 
