@@ -24,6 +24,8 @@ const PUPPETEER_OPTS = {
     devtools: false,
 }
 
+let paramToSaveData={};
+
 http.createServer((req, resp) => {
     var method = req.method;
 
@@ -47,8 +49,8 @@ http.createServer((req, resp) => {
             var postDataObject = JSON.parse(postData);
             let filename=postDataObject.filename;
             let code=postDataObject.code;
-            let functionDefinition='function '+postDataObject.functionName+'(){'+code+'}';
-            vm.runInThisContext('(function(require) {const PUPPETEER_OPTS='+JSON.stringify(PUPPETEER_OPTS)+'; '+functionDefinition+''+postDataObject.functionName+'()}); ')(require);
+            let functionDefinition='function '+postDataObject.functionName+'(globalVar){'+code+'}';
+            vm.runInThisContext('(function(require,paramToSaveData) {const PUPPETEER_OPTS='+JSON.stringify(PUPPETEER_OPTS)+'; '+functionDefinition+''+postDataObject.functionName+'(paramToSaveData)}); ')(require,paramToSaveData);
             //vm.runInThisContext('model()')
             resp.end('++'+JSON.stringify(postDataObject)+'++');
             fs.writeFile(filename, functionDefinition, function(err) {
@@ -62,5 +64,7 @@ http.createServer((req, resp) => {
     }
 
   }).listen(8124);
+
+  setInterval(() => {console.log(paramToSaveData)},10000);
 
   console.log('Server running at http://127.0.0.1:8124/');
