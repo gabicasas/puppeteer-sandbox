@@ -3,9 +3,10 @@ const PUPPETEER_OPTS = {
   slowMo: { default: 300, click: 200, keyup: 10 },
   devtools: true,
 }
-function gabi(globalVar){const puppeteer = require('puppeteer');
 var events = require('events');
-var eventEmitter = new events.EventEmitter();                         
+var eventEmitter = new events.EventEmitter(); 
+function gabi(globalVar, eventEmitter){const puppeteer = require('puppeteer');
+ 
 (async () => {
   const browser = await puppeteer.launch(PUPPETEER_OPTS)
   const page = await browser.newPage()
@@ -27,8 +28,8 @@ var eventEmitter = new events.EventEmitter();
     function() {
       //debugger;
       let obj= document.querySelector("TR:nth-child(7) > TD.CellNoBorder:nth-child(3)");
-      puppeteerMutationListener({'_mutation_':{'a':obj.innerHTML}})
-      console.log({'_mutation_':{'a':obj.innerHTML}})
+      puppeteerMutationListener({'a':obj.innerHTML})
+      console.log({'a':obj.innerHTML})
      }
     )
     let config = {
@@ -47,8 +48,8 @@ var eventEmitter = new events.EventEmitter();
     function() {
       //debugger;
       let obj= document.querySelector("TR:nth-child(8) > TD.CellNoBorder:nth-child(3)");
-      puppeteerMutationListener({'_mutation_':{'b':obj.innerHTML}})
-      console.log({'_mutation_':{'b':obj.innerHTML}})
+      puppeteerMutationListener({'b':obj.innerHTML})
+      console.log({'b':obj.innerHTML})
      }
     )
     let config = {
@@ -67,8 +68,8 @@ var eventEmitter = new events.EventEmitter();
     function() {
       //debugger;
       let obj= document.querySelector("TD.CellNoBorder.Down:nth-child(6)");
-      puppeteerMutationListener({'_mutation_':{'c':obj.innerHTML}})
-      console.log({'_mutation_':{'c':obj.innerHTML}})
+      puppeteerMutationListener({'c':obj.innerHTML})
+      console.log({'c':obj.innerHTML})
      }
     )
     let config = {
@@ -84,8 +85,13 @@ var eventEmitter = new events.EventEmitter();
   
 })()}
 let paramToSaveData={};
-setInterval(() => {console.log(paramToSaveData)},10000);
 
-eventEmitter.on('changeData',(value) => {console.log('evento',value)});
 
-gabi(paramToSaveData);
+eventEmitter.on('changeData',(value) => {
+  for(let i in value){
+    paramToSaveData[i]=value[i];
+  }
+  console.log('evento',value)
+  console.log('dato',paramToSaveData);
+});
+gabi(paramToSaveData,eventEmitter);
