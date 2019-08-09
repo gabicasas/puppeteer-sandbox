@@ -4,6 +4,8 @@ const PUPPETEER_OPTS = {
   devtools: true,
 }
 function gabi(globalVar){const puppeteer = require('puppeteer');
+var events = require('events');
+var eventEmitter = new events.EventEmitter();                         
 (async () => {
   const browser = await puppeteer.launch(PUPPETEER_OPTS)
   const page = await browser.newPage()
@@ -15,7 +17,9 @@ function gabi(globalVar){const puppeteer = require('puppeteer');
   await page.waitForSelector("#UI_0_CT_MMO_TABLE_INDICES_0 > #UI_0_MMO_TABLE_INDICES_0 > tbody > tr:nth-child(7) > .CellSymbolDescription");
  await page.click("#UI_0_CT_MMO_TABLE_INDICES_0 > #UI_0_MMO_TABLE_INDICES_0 > tbody > tr:nth-child(7) > .CellSymbolDescription");
   
- page.exposeFunction('puppeteerMutationListener', function(value){console.log(value)});
+ page.exposeFunction('puppeteerMutationListener', function(value){
+   eventEmitter.emit('changeData',value);
+ });
 
   await page.waitForSelector("TR:nth-child(7) > TD.CellNoBorder:nth-child(3)")
   globalVar.a=await page.evaluate(element => { 
@@ -81,4 +85,7 @@ function gabi(globalVar){const puppeteer = require('puppeteer');
 })()}
 let paramToSaveData={};
 setInterval(() => {console.log(paramToSaveData)},10000);
+
+eventEmitter.on('changeData',(value) => {console.log('evento',value)});
+
 gabi(paramToSaveData);
