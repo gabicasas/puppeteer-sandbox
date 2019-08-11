@@ -6,7 +6,8 @@
   "scripts": {
     "test": "node gabiTest.js",
     "start": "node index.js",
-    "debugt": "node --inspect-brk=33871 gabiTest.js"
+    "debugt": "node --inspect-brk=33871 gabiTest.js",
+    "debug": "node --inspect-brk=33871 testTeclas.js"
   },
   "repository": {
     "type": "git",

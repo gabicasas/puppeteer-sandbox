@@ -17,11 +17,13 @@ const fs = require('fs');
 vm.runInThisContext(code)(require);*/
 const http = require('http');
 var url = require('url');
+var events = require('events');
+var eventEmitter = new events.EventEmitter(); 
 
 const PUPPETEER_OPTS = {
     headless: false,
     slowMo: { default: 300, click: 200, keyup: 10 },
-    devtools: false,
+    devtools: true,
 }
 
 let paramToSaveData={};
@@ -49,11 +51,11 @@ http.createServer((req, resp) => {
             var postDataObject = JSON.parse(postData);
             let filename=postDataObject.filename;
             let code=postDataObject.code;
-            let functionDefinition='function '+postDataObject.functionName+'(globalVar){'+code+'}';
-            vm.runInThisContext('(function(require,paramToSaveData) {const PUPPETEER_OPTS='+JSON.stringify(PUPPETEER_OPTS)+'; '+functionDefinition+''+postDataObject.functionName+'(paramToSaveData)}); ')(require,paramToSaveData);
+            
+            vm.runInThisContext('(function(require,paramToSaveData,eventEmitter) {const PUPPETEER_OPTS='+JSON.stringify(PUPPETEER_OPTS)+'; '+code+''+postDataObject.functionName+'(paramToSaveData,eventEmitter)}); ')(require,paramToSaveData);
             //vm.runInThisContext('model()')
             resp.end('++'+JSON.stringify(postDataObject)+'++');
-            fs.writeFile(filename, functionDefinition, function(err) {
+            fs.writeFile(filename, code, function(err) {
                 if(err) {
                     return console.log(err);
                 }
