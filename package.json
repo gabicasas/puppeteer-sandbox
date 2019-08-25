@@ -8,7 +8,7 @@
     "start": "node index.js",
     "debugt": "node --inspect-brk=33871 gabiTest.js",
     "debug": "node --inspect-brk=33871 index.js",
-    "launchFile": "node --inspect-brk=33871 launchFile.js testTeclas.js"
+    "launchFile": "node --inspect-brk=33871 launchFile.js"
   },
   "repository": {
     "type": "git",

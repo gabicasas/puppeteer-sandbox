@@ -38,14 +38,19 @@ http
         let functionName=postDataObject.functionName;
 
         // vm.runInThisContext('(function(require,paramToSaveData,eventEmitter) {const PUPPETEER_OPTS='+JSON.stringify(PUPPETEER_OPTS)+'; '+code+''+postDataObject.functionName+'(paramToSaveData,eventEmitter)}); ')(require,paramToSaveData);
-
-        resp.end("++" + JSON.stringify(postDataObject) + "++");
+        
+        //resp.end("++" + JSON.stringify(postDataObject) + "++");
         fs.writeFile(filename, code, function(err) {
           if (err) {
             return console.log(err);
           } else {
             const a=require('./'+filename)
+            try{
             a[functionName](paramToSaveData,eventEmitter)
+            resp.end("Ejecucion finalizada")
+            }catch(e){
+              resp.end("error")
+            }
           }
 
           console.log("The file was saved!");
