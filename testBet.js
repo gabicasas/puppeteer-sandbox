@@ -1,4 +1,6 @@
- let datoDom=null, parentDatoDom=null;
+  
+let datoDom=null, parentDatoDom=null, nodes=null;
+
  window.addEventListener('mousemove', (evt) => {
      window.mousePositionEvt=evt;
  });
@@ -16,9 +18,23 @@
      {
          let selector=obtainCssSelector(datoDom,parentDatoDom);
          let nodos=textNodesUnder(parentDatoDom);
+         /*nodos.map(nodo => {
+         	nodo.node.parentNode.addEventListener("click", (e) =>{
+
+         	});
+         }) */
+         //los guardo para el evento que seleccina el texto fijo
+         nodes=nodos;
          items.push({selector:selector,nodos:nodos});
          datoDom=null;
          parentDatoDom=null;
+         console.log(items);
+     }else if(evt.keyCode==113) //F2 para seleccionar los textos fijos
+     {
+     	nodes.map(nodo => {
+     		if(nodo.node==window.mousePositionEvt.target.firstChild)//firstChild asegura bajar al texto
+     			nodo.fixed=true;
+     	})
      }
  });
 
@@ -27,7 +43,7 @@
 //TODO, filtar par eliminar los texto vaciones con el filtro de la propia funcion
  function textNodesUnder(el){
   var n, a=[], walk=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,null,false);
-  while(n=walk.nextNode()) a.push(n);
+  while(n=walk.nextNode()) a.push({node:n, value: n.nodeValue});
   return a;
 }
 
@@ -64,8 +80,10 @@ obtainTemplate=function(templateChild){
 		var selector={};
 		selector.tag=element.tagName;
 		for(let i=0;i<element.parentNode.children.length;i++){
-			if(element==element.parentNode.children[i])
-				selector.child=":nth-child("+(i+1)+")";
+			if(element==element.parentNode.children[i]){
+				// selector.child=":nth-child("+(i+1)+")";
+				selector.child=(i+1);
+			}
 		}
 		
 		selectors.push(selector);
@@ -95,7 +113,7 @@ observer = new MutationObserver(function(a){
 	
 	a.map(element => {
 	   
-	console.log(obtainCssSelector(element.target, document.body));
+	//console.log(obtainCssSelector(element.target, document.body));
 	
 	
 	items.map(item => {
@@ -111,9 +129,25 @@ observer = new MutationObserver(function(a){
 		}
 		if(isThisItem){
 		//Se calcula el numero de nodos de texto a ver si coincide
-		if(listaNodosTemplate(parent).length==item.nodos.length)
-			;//Parece que va bien...
+		let nodosPosibles=listaNodosTemplate(parent);
+		if(nodosPosibles.length==item.nodos.length){
+			//console.log('puede ser',item, parent);
+			for(let i=0;i<item.nodos.length;i++){
+				if(item.nodos[i].fixed){
+					isThisItem=(item.nodos[i].value==nodosPosibles[i].nodeValue) && isThisItem;
+				}
+			}
+		}else{
+			isThisItem=false;
 		}
+		}
+	
+		if(isThisItem){
+			console.log(item);
+			item.value=element.target.firstChild.nodeValue;
+		}
+
+
 	});
 	
 	})
@@ -126,13 +160,9 @@ observer.observe(document.documentElement, {
 });
 
 /*
-
 Modelo de datos
 -selector cortado
 -cadena de nodos text
-
 var items=[{selector:aa, nodos:...}]
-
-
 */
 var items=[];
