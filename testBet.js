@@ -82,7 +82,7 @@ obtainTemplate=function(templateChild){
 		for(let i=0;i<element.parentNode.children.length;i++){
 			if(element==element.parentNode.children[i]){
 				// selector.child=":nth-child("+(i+1)+")";
-				selector.child=(i+1);
+				selector.child=(i);
 			}
 		}
 		
@@ -121,7 +121,7 @@ observer = new MutationObserver(function(a){
 		//Buscamos el psoible padore en funcion de lo largo de la cadena del selector
 		var parent=element.target;
 		for(var i=0;i<item.selector.length && isThisItem;i++){
-		    if(isThisItem && item.selector[i].tag==parent.tagName)
+		    if(isThisItem && item.selector[i].tag==parent.tagName && parent.parentNode.children[item.selector[i].child]==parent)
 		      isThisItem=true;
 		    else
 		      isThisItem=false;  
@@ -143,8 +143,9 @@ observer = new MutationObserver(function(a){
 		}
 	
 		if(isThisItem){
-			console.log(item);
+			
 			item.value=element.target.firstChild.nodeValue;
+			console.info(item);
 		}
 
 
