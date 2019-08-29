@@ -9,20 +9,24 @@ let datoDom=null, parentDatoDom=null, nodes=null;
      if(evt.keyCode==118){//F7 par cargar el dato
          datoDom=window.mousePositionEvt.target;
          parentDatoDom=datoDom;
-        datoDom.style.backgroundColor="red";
+        datoDom.style.border="1px dashed red";
      }else if(evt.keyCode==119) //F8 para buscar padre
      {
          parentDatoDom=parentDatoDom.parentNode;
-         parentDatoDom.style.backgroundColor="green";
+         parentDatoDom.style.border="1px dashed green";
      }else if(evt.keyCode==120) //F9 para guardar template
      {
          let selector=obtainCssSelector(datoDom,parentDatoDom);
          let nodos=textNodesUnder(parentDatoDom);
-         /*nodos.map(nodo => {
+        
+         /* nodos.map(nodo => {
          	nodo.node.parentNode.addEventListener("click", (e) =>{
-
          	});
-         }) */
+         })  */
+         var selecD=selectorDom(selector);
+         document.querySelectorAll(selecD).forEach(element => {
+         	element.style.border="1px dashed green";
+         })
          //los guardo para el evento que seleccina el texto fijo
          nodes=nodos;
          items.push({selector:selector,nodos:nodos});
@@ -108,6 +112,17 @@ return selectors;
 
 }
 
+var selectorDom=function(selectors){
+	var result="";
+for(var i=selectors.length-1;i>=0;i--){
+result+=selectors[i].tag+":nth-child("+(selectors[i].child+1)+")";
+if(i!=0)
+	result+= " > "
+}
+return result;
+
+}
+
 //Todos los cambios
 observer = new MutationObserver(function(a){
 	
@@ -143,7 +158,8 @@ observer = new MutationObserver(function(a){
 		}
 	
 		if(isThisItem){
-			
+			item.key="";
+			item.nodos.map(nodo => {if(nodo.fixed) item.key+='$$$'+nodo.value})
 			item.value=element.target.firstChild.nodeValue;
 			console.info(item);
 		}
