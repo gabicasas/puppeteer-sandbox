@@ -1,4 +1,5 @@
   
+ 
 let datoDom=null, parentDatoDom=null, nodes=null;
 
  window.addEventListener('mousemove', (evt) => {
@@ -26,6 +27,13 @@ let datoDom=null, parentDatoDom=null, nodes=null;
          var selecD=selectorDom(selector);
          document.querySelectorAll(selecD).forEach(element => {
          	element.style.border="1px dashed green";
+         	let newParent=element;
+         	for(let i=0;i<selector.length;i++)
+         		newParent=newParent.parentNode;
+         	let newSelector=obtainCssSelector(element,newParent);
+         	let newNodos=listaNodosTemplate(newParent);
+         	let newItem={selector: newSelector, nodos:newNodos}; // Para guardar en lista auxiliar
+         		
          })
          //los guardo para el evento que seleccina el texto fijo
          nodes=nodos;
