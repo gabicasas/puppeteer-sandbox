@@ -1,5 +1,4 @@
   
- 
 let datoDom=null, parentDatoDom=null, nodes=null;
 
  window.addEventListener('mousemove', (evt) => {
@@ -31,8 +30,9 @@ let datoDom=null, parentDatoDom=null, nodes=null;
          	for(let i=0;i<selector.length;i++)
          		newParent=newParent.parentNode;
          	let newSelector=obtainCssSelector(element,newParent);
-         	let newNodos=listaNodosTemplate(newParent);
+         	let newNodos=textNodesUnder(newParent);
          	let newItem={selector: newSelector, nodos:newNodos}; // Para guardar en lista auxiliar
+         	calculatedItems.push(newItem);
          		
          })
          //los guardo para el evento que seleccina el texto fijo
@@ -47,6 +47,20 @@ let datoDom=null, parentDatoDom=null, nodes=null;
      		if(nodo.node==window.mousePositionEvt.target.firstChild)//firstChild asegura bajar al texto
      			nodo.fixed=true;
      	})
+     }else if(evt.keyCode==121){ //F10 Actualizar nodos fijos
+    /* alert('actualiza nodos fijos');
+     	nodes.map(nodo => {
+     		ttttttt ///Actualizar los nodos de  calculatedItems
+     	})*/
+     	for(let i= 0; i<nodes.length;i++){
+     		if(nodes[i].fixed){
+     			for(let j=0;j<calculatedItems.length;j++){
+     				calculatedItems[j].nodos[i].fixed=true;
+     			}
+     			//calculatedItems.forEach(item => item.nodos[i].fixed=true);
+     		}
+     	}
+     	calculatedItems.forEach(el => items.push(el));
      }
  });
 
@@ -191,3 +205,4 @@ Modelo de datos
 var items=[{selector:aa, nodos:...}]
 */
 var items=[];
+var calculatedItems=[];
