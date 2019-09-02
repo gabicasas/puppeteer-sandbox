@@ -59,7 +59,11 @@
      			//calculatedItems.forEach(item => item.nodos[i].fixed=true);
      		}
      	}
-     	calculatedItems.forEach(el => items.push(el));
+     	let id=prompt("Introduzca id");
+     	//Se añade el id a los que no tienen
+     	items.forEach(item => {if(!item.id){item.id=id}});
+
+     	calculatedItems.forEach(el => { el.id=id; items.push(el)});
      }
  });
 
@@ -190,6 +194,9 @@ observer = new MutationObserver(function(a){
 			item.nodos.map(nodo => {if(nodo.fixed) item.key+='$$$'+nodo.value})
 			item.value=element.target.firstChild.nodeValue;
 			console.info(item);
+			if(!result[item.id])
+				result[item.id]={};
+			result[item.id][item.key]=item.value;
 		}
 
 
@@ -212,3 +219,4 @@ var items=[{selector:aa, nodos:...}]
 */
 var items=[];
 var calculatedItems=[];
+var result={}; // alberga los resultados
