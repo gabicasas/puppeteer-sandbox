@@ -1,5 +1,4 @@
-  
-let datoDom=null, parentDatoDom=null, nodes=null;
+ let datoDom=null, parentDatoDom=null, nodes=null;
 
  window.addEventListener('mousemove', (evt) => {
      window.mousePositionEvt=evt;
@@ -68,7 +67,14 @@ let datoDom=null, parentDatoDom=null, nodes=null;
 
 //TODO, filtar par eliminar los texto vaciones con el filtro de la propia funcion
  function textNodesUnder(el){
-  var n, a=[], walk=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,null,false);
+  var n, a=[], walk=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,(node) => {
+  
+  	if(escape(node.nodeValue).replace(/%0A/g,"").replace(/%20/g,"").length==0) // se salta espacios en blanco
+  		return NodeFilter.FILTER_REJECT;
+  	// NodeFilter.FILTER_ACCEPT; // NodeFilter.FILTER_REJECT
+  	return NodeFilter.FILTER_ACCEPT;
+
+  },false);
   while(n=walk.nextNode()) a.push({node:n, value: n.nodeValue});
   return a;
 }
