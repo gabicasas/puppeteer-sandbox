@@ -1,4 +1,4 @@
- let datoDom=null, parentDatoDom=null, nodes=null;
+  let datoDom=null, parentDatoDom=null, nodes=null;
 
  window.addEventListener('mousemove', (evt) => {
      window.mousePositionEvt=evt;
@@ -46,8 +46,10 @@
      }else if(evt.keyCode==113) //F2 para seleccionar los textos fijos
      {
      	nodes.map(nodo => {
-     		if(nodo.node==window.mousePositionEvt.target.firstChild)//firstChild asegura bajar al texto
+     		if(nodo.node==window.mousePositionEvt.target.firstChild){//firstChild asegura bajar al texto
+     		    nodo.node.parentNode.style.border="1px dashed blue";
      			nodo.fixed=true;
+     		}
      	})
      }else if(evt.keyCode==121){ //F10 Actualizar nodos fijos
     /* alert('actualiza nodos fijos');
@@ -58,6 +60,8 @@
      		if(nodes[i].fixed){
      			for(let j=0;j<calculatedItems.length;j++){
      				calculatedItems[j].nodos[i].fixed=true;
+     				calculatedItems[j].nodos[i].node.parentNode.style.border="1px dashed blue";
+
      			}
      			//calculatedItems.forEach(item => item.nodos[i].fixed=true);
      		}
