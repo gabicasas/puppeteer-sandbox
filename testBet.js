@@ -24,14 +24,17 @@
          })  */
          var selecD=selectorDom(selector);
          document.querySelectorAll(selecD).forEach(element => {
-         	element.style.border="1px dashed green";
+         	
          	let newParent=element;
          	for(let i=0;i<selector.length;i++)
          		newParent=newParent.parentNode;
          	let newSelector=obtainCssSelector(element,newParent);
          	let newNodos=textNodesUnder(newParent);
-         	let newItem={selector: newSelector, nodos:newNodos}; // Para guardar en lista auxiliar
-         	calculatedItems.push(newItem);
+         	if(newNodos.length==nodos.length){ //Esto es una forma de saberque la estructura del dom es similar
+         		let newItem={selector: newSelector, nodos:newNodos}; // Para guardar en lista auxiliar
+         		calculatedItems.push(newItem);
+         		element.style.border="1px dashed green";
+         	}
          		
          })
          //los guardo para el evento que seleccina el texto fijo
@@ -64,6 +67,7 @@
      	items.forEach(item => {if(!item.id){item.id=id}});
 
      	calculatedItems.forEach(el => { el.id=id; items.push(el)});
+     	calculatedItems=[];
      }
  });
 
@@ -72,10 +76,10 @@
 //TODO, filtar par eliminar los texto vaciones con el filtro de la propia funcion
  function textNodesUnder(el){
   var n, a=[], walk=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,(node) => {
-  
-  	if(escape(node.nodeValue).replace(/%0A/g,"").replace(/%20/g,"").length==0) // se salta espacios en blanco
+  /*
+  	if(escape(node.nodeValue).replace(/%0A/g,"").replace(/%20/g,"").replace(/%09/g,"").length==0) // se salta espacios en blanco
   		return NodeFilter.FILTER_REJECT;
-  	// NodeFilter.FILTER_ACCEPT; // NodeFilter.FILTER_REJECT
+  */	
   	return NodeFilter.FILTER_ACCEPT;
 
   },false);
