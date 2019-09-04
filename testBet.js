@@ -1,4 +1,4 @@
-  let datoDom=null, parentDatoDom=null, nodes=null;
+   let datoDom=null, parentDatoDom=null, nodes=null;
 
  window.addEventListener('mousemove', (evt) => {
      window.mousePositionEvt=evt;
@@ -174,7 +174,25 @@ observer = new MutationObserver(function(a){
 	items.map(item => {
 	    var isThisItem=true;
 		//Buscamos el psoible padore en funcion de lo largo de la cadena del selector
-		var parent=element.target;
+
+
+        var start=0;
+	    var end=item.selector.length-1;
+	    var nodes=[];
+	    while(nodes.length!=1 &&  end!=0){
+			nodes=element.target.querySelectorAll(selectorDom(item.selector.slice(start,end)))
+			end--;
+	    }
+	    //Será el nodo con el texto a a auditar
+	    var target=null;
+	    if(nodes.length==1 && nodes[0].firstChild && nodes[0].firstChild.nodeName=='#text'){
+	    	target=nodes[0];
+	    }
+		if(target){
+
+
+        // Sera el nodo padre de varios niveles coinicidnete con el selector y los nodos de texto fijos
+		var parent=target;
 		for(var i=0;i<item.selector.length && isThisItem;i++){
 		    if(isThisItem && item.selector[i].tag==parent.tagName && parent.parentNode.children[item.selector[i].child]==parent)
 		      isThisItem=true;
@@ -200,14 +218,14 @@ observer = new MutationObserver(function(a){
 		if(isThisItem){
 			item.key="";
 			item.nodos.map(nodo => {if(nodo.fixed) item.key+='$$$'+nodo.value})
-			item.value=element.target.firstChild.nodeValue;
+			item.value=target.firstChild.nodeValue;
 			console.info(item);
 			if(!result[item.id])
 				result[item.id]={};
 			result[item.id][item.key]=item.value;
 		}
 
-
+		}
 	});
 	
 	})
