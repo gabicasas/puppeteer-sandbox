@@ -1,4 +1,4 @@
-   let datoDom=null, parentDatoDom=null, nodes=null;
+    let datoDom=null, parentDatoDom=null, nodes=null;
 
  window.addEventListener('mousemove', (evt) => {
      window.mousePositionEvt=evt;
@@ -177,17 +177,24 @@ observer = new MutationObserver(function(a){
 
 
         var start=0;
-	    var end=item.selector.length-1;
+	    var end=item.selector.length;
 	    var nodes=[];
+	    //Se busca el caso en que el nodo que cambio no es solo el texto
 	    while(nodes.length!=1 &&  end!=0){
 			nodes=element.target.querySelectorAll(selectorDom(item.selector.slice(start,end)))
 			end--;
 	    }
+		
+	    
 	    //Será el nodo con el texto a a auditar
 	    var target=null;
 	    if(nodes.length==1 && nodes[0].firstChild && nodes[0].firstChild.nodeName=='#text'){
 	    	target=nodes[0];
+	    }else{
+	    	//En caso de que solo haya cambiado el texto no vale la estrategia del selector
+	    	target=element.target;
 	    }
+
 		if(target){
 
 
