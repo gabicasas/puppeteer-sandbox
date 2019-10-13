@@ -61,7 +61,9 @@ http
   .listen(8124);
 
 setInterval(() => {
-  console.log(paramToSaveData);
+  console.log("datos:",paramToSaveData);
 }, 10000);
-
+eventEmitter.on('changeData',(error,result) => {
+  console.log(paramToSaveData);
+});
 console.log("Server running at http://127.0.0.1:8124/");
