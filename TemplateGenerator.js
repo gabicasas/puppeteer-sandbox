@@ -3,6 +3,8 @@ class TemplateGenerator {
     this.selector = conf.selector;
     this.selectorDom = conf.selectorDom;
     this.nodes = conf.nodes;
+    this.items=[];
+    this.calculatedItems=[];
   }
 
   dinamicData(a, b) {
@@ -13,14 +15,34 @@ class TemplateGenerator {
   staticData() {
     //Todos los posibles nodos
     let nodes = document.querySelectorAll(this.selector);
+
+
     nodes.forEach(element => {
       let newParent = element;
-      for (let i = 0; i < this.selector.length; i++)
+      for (let i = 0; i < this.selectorDom.length; i++)
         newParent = newParent.parentNode;
       //Se calcula el selector estructurado
       let newSelector = this.obtainCssSelector(element, newParent);
       let newNodos = this.textNodesUnder(newParent);
+      //Se marcan los fixed
+      for(let i=0;i<this.nodes.length;i++){
+        if(this.nodes[i].fixed)
+          newNodos[i].fixed=true;
+      }
+      if(newNodos.length==this.nodes.length){ //Esto es una forma de saberque la estructura del dom es similar
+         		let newItem={selector: newSelector, nodos:newNodos}; // Para guardar en lista auxiliar
+         		//Se marca
+         		this.calculatedItems.push(newItem);
+         		element.style.border="1px dashed green";
+         	
+         	}
+        	
     });
+     /*this.nodes=newNodos;
+         items.push({selector:newSelector,nodos:newNodos});
+         datoDom=null;
+         parentDatoDom=null;
+         console.log(items);*/
   }
 
   obtainCssSelector(myElement, firstParentElement) {
@@ -163,8 +185,8 @@ return NodeFilter.FILTER_REJECT;
       subtree: true
     });
   }
-}
 
-module.exports = {
-  TemplateGenerator: TemplateGenerator
-};
+  test(a){
+    console.log(a);
+  }
+}
