@@ -30,7 +30,7 @@ class TemplateGenerator {
           newNodos[i].fixed=true;
       }
       if(newNodos.length==this.nodes.length){ //Esto es una forma de saberque la estructura del dom es similar
-         		let newItem={selector: newSelector, nodos:newNodos}; // Para guardar en lista auxiliar
+         		let newItem={selector: newSelector, nodos:newNodos, selected:element}; // Para guardar en lista auxiliar
          		//Se marca
          		this.calculatedItems.push(newItem);
          		element.style.border="1px dashed green";
