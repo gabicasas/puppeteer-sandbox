@@ -17,6 +17,15 @@ function dgt3(globalVar, eventEmitter) {
     await page.keyboard.down(keyboardMapping.keyCodeLayout[118].code)
 
 
+
+    /** Setea descarga (no se si funciona)*/
+    await page._client.send('Page.setDownloadBehavior', {
+      behavior: 'allow',
+      // This path must match the WORKSPACE_DIR in Step 1
+      downloadPath: './downloads',
+    });
+
+
 try{
 while(true){
 
@@ -25,6 +34,11 @@ while(true){
     let data = await page.evaluate(element => {
       window.tg = (new TemplateGenerator({ "customFunction": "downloadPDF", "selector": "A:nth-child(1)", "selectorDom": [{ "tag": "A", "child": 0 }], "nodes": [{ "node": {}, "value": "Ayuntamiento de Pamplona\n\nEdicto de notificación de denuncias.", "fixed": true }, { "node": {}, "value": "\n\t\t\t\t\t\t\t\t\t" }] }));
       window.tg.staticData();
+      /***************** */
+      window.tg.calculatedItems.forEach(element => {
+        element.selected.click();
+      });
+      /************************ */
       return window.tg.calculatedItems;
     })
 
