@@ -4,6 +4,7 @@ class TemplateGenerator {
     this.selectorDom = conf.selectorDom;
     this.nodes = conf.nodes;
     this.items=[];
+    this.customFunction=conf.customFunction;
     this.calculatedItems=[];
   }
 
@@ -25,10 +26,14 @@ class TemplateGenerator {
       let newSelector = this.obtainCssSelector(element, newParent);
       let newNodos = this.textNodesUnder(newParent);
       //Se marcan los fixed
+      try{
       for(let i=0;i<this.nodes.length;i++){
         if(this.nodes[i].fixed)
           newNodos[i].fixed=true;
       }
+    }catch(e){
+      console.log("Esta fallando poner los nodos fixed")
+    }
       if(newNodos.length==this.nodes.length){ //Esto es una forma de saberque la estructura del dom es similar
          		let newItem={selector: newSelector, nodos:newNodos, selected:element}; // Para guardar en lista auxiliar
          		//Se marca
@@ -38,11 +43,17 @@ class TemplateGenerator {
          	}
         	
     });
-     /*this.nodes=newNodos;
-         items.push({selector:newSelector,nodos:newNodos});
-         datoDom=null;
-         parentDatoDom=null;
-         console.log(items);*/
+   
+          debugger;
+         if(this.customFunction!='_'){
+           let funct=window[this.customFunction];
+          
+          this.calculatedItems.forEach(item => {
+            debugger;
+          funct(item.selected);
+         //  console.log(item.selected);
+          })
+        }
   }
 
   obtainCssSelector(myElement, firstParentElement) {
