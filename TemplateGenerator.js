@@ -3,9 +3,9 @@ class TemplateGenerator {
     this.selector = conf.selector;
     this.selectorDom = conf.selectorDom;
     this.nodes = conf.nodes;
-    this.items=[];
-    this.customFunction=conf.customFunction;
-    this.calculatedItems=[];
+    this.items = [];
+    this.customFunction = conf.customFunction;
+    this.calculatedItems = [];
   }
 
   dinamicData(a, b) {
@@ -26,40 +26,50 @@ class TemplateGenerator {
       let newSelector = this.obtainCssSelector(element, newParent);
       let newNodos = this.textNodesUnder(newParent);
       //Se marcan los fixed
-      try{
-      for(let i=0;i<this.nodes.length;i++){
-        if(this.nodes[i].fixed)
-          newNodos[i].fixed=true;
-      }
-    }catch(e){
-      console.log("Esta fallando poner los nodos fixed")
-    }
-      if(newNodos.length==this.nodes.length){ //Esto es una forma de saberque la estructura del dom es similar
-         		let newItem={selector: newSelector, nodos:newNodos, selected:element}; // Para guardar en lista auxiliar
-         		//Se marca
-         		this.calculatedItems.push(newItem);
-         		element.style.border="1px dashed green";
-         	
-         	}
-        	
-    });
-   
-          debugger;
-         if(this.customFunction!='_'){
-           let funct=window[this.customFunction];
-          
-          this.calculatedItems.forEach(item => {
-            debugger;
-          funct(item.selected);
-         //  console.log(item.selected);
-          })
+      try {
+        for (let i = 0; i < this.nodes.length; i++) {
+          if (this.nodes[i].fixed)
+            newNodos[i].fixed = true;
         }
+      } catch (e) {
+        console.log("Esta fallando poner los nodos fixed")
+      }
+      if (newNodos.length == this.nodes.length) { //Esto es una forma de saberque la estructura del dom es similar
+        let newItem = { selector: newSelector, nodos: newNodos, selected: element }; // Para guardar en lista auxiliar
+        //Se marca
+        this.calculatedItems.push(newItem);
+        element.style.border = "1px dashed green";
+
+      }
+
+    });
+
+    //debugger;
+    if (this.customFunction != '_') {
+      let funct = window[this.customFunction];
+
+      this.calculatedItems.forEach(item => {
+       
+       
+        
+        //let a=item.selected.innerHTML;
+        try{
+        funct(JSON.stringify({'innerHTML':item.selected.innerHTML,'href':item.selected.href}));
+        }catch(e){
+          debugger;
+        }
+        //funct(string_copy).then(result => {debugger;console.log(result)}).catch(error=>{debugger;console.error(error)});
+        
+        //funct("TEST");
+        //  console.log(item.selected);
+      })
+    }
   }
 
   obtainCssSelector(myElement, firstParentElement) {
     let selectors = [];
 
-    let mySelector = function(element) {
+    let mySelector = function (element) {
       if (element == firstParentElement) {
         return;
       } else {
@@ -93,6 +103,18 @@ class TemplateGenerator {
     return selectors;
   }
 
+
+ /* obtainStringSelector(selectors) {
+    var result = "";
+    for (var i = selectors.length - 1; i >= 0; i--) {
+      result += selectors[i].tag + ":nth-child(" + (selectors[i].child + 1) + ")";
+      if (i != 0)
+        result += " > "
+    }
+    return result;
+
+  }*/
+
   textNodesUnder(el) {
     var n,
       a = [],
@@ -115,7 +137,7 @@ return NodeFilter.FILTER_REJECT;
 
   observeChanges() {
     //Todos los cambios
-    observer = new MutationObserver(function(a) {
+    observer = new MutationObserver(function (a) {
       a.map(element => {
         //console.log(obtainCssSelector(element.target, document.body));
 
@@ -197,7 +219,7 @@ return NodeFilter.FILTER_REJECT;
     });
   }
 
-  test(a){
+  test(a) {
     console.log(a);
   }
 }

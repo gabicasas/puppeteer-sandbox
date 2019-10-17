@@ -27,19 +27,23 @@ function dgt3(globalVar, eventEmitter) {
 
 
 try{
-while(true){
+//while(true){
 
-    page.exposeFunction('downloadPDF', function (elem) { return elem; });
+    page.exposeFunction('downloadPDF', function (elem) {elem=JSON.parse(elem); console.log(elem.innerHTML);console.log(elem.href); return elem;});
     await page.evaluate(fs.readFileSync('./TemplateGenerator.js', 'utf8'));
-    let data = await page.evaluate(element => {
+    let data = await page.evaluate(async(element) => {
       window.tg = (new TemplateGenerator({ "customFunction": "downloadPDF", "selector": "A:nth-child(1)", "selectorDom": [{ "tag": "A", "child": 0 }], "nodes": [{ "node": {}, "value": "Ayuntamiento de Pamplona\n\nEdicto de notificación de denuncias.", "fixed": true }, { "node": {}, "value": "\n\t\t\t\t\t\t\t\t\t" }] }));
       window.tg.staticData();
       /***************** */
       window.tg.calculatedItems.forEach(element => {
-        element.selected.click();
+        //element.selected.click();
       });
       /************************ */
-      return window.tg.calculatedItems;
+      debugger;
+      return await dowloadPDF({innerHTML:window.tg.calculatedItems[0].selected.innerHTML,href:window.tg.calculatedItems[0].selected.href});
+      //return window.tg.calculatedItems;
+      
+      
     })
 
 
@@ -58,7 +62,7 @@ while(true){
     await navigationPromise
 
     await page.setViewport({ width: 1600, height: 403 })
-  }
+ // }
 }catch(e){
   console.log("Se acabó lo que se daba")
 }
