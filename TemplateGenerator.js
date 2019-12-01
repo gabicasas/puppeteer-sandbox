@@ -43,15 +43,17 @@ class TemplateGenerator {
          	}
         	
     });
-   
-          debugger;
+          console.log(this);
+          //debugger;
          if(this.customFunction!='_'){
-           let funct=window[this.customFunction];
-          
+          // let funct=window[this.customFunction];
+          // console.log(funct);
+          //debugger;
           this.calculatedItems.forEach(item => {
-            debugger;
-          funct(item.selected);
-         //  console.log(item.selected);
+          console.log(item);
+          // funct(item.selected);
+          return item.selected;
+          
           })
         }
   }
