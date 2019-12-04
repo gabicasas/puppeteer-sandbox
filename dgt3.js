@@ -1,7 +1,7 @@
 function dgt3(globalVar, eventEmitter) {
   (async () => {
     const constants = require('./constants.js')
-    const puppeteer = require('puppeteer');
+    const puppeteer = require('puppeteer-core');
     const fs = require('fs')
     const keyboardMapping = require('./USKeyboardLayout.js');
     const browser = await puppeteer.launch(constants.PUPPETEER_OPTS)
