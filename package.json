@@ -9,7 +9,7 @@
     "start": "node index.js",
     "debugt": "node --inspect-brk=33871 gabiTest.js",
     "debug": "node --inspect-brk=33871 index.js",
-    "launchFile": "node  launchFile.js",
+    "launchFile": "node --inspect-brk=33871 launchFile.js",
     "testra": "npm run launchFile -- dgt3.js dgt3"
   },
   "repository": {
@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/gabicasas/puppeteer-sandbox#readme",
   "dependencies": {
+    "download-pdf": "^0.1.6",
     "puppeteer-core": "^2.0.0"
   }
 }

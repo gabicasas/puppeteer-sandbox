@@ -1,7 +1,9 @@
 function dgt3(globalVar, eventEmitter) {
   (async () => {
-    const constants = require('./constants.js')
+    const constants = require('./constants.js');
     const puppeteer = require('puppeteer-core');
+    const downloads = require('./download.js');
+    downloads.download(globalVar, eventEmitter);
     const fs = require('fs')
     const keyboardMapping = require('./USKeyboardLayout.js');
     const browser = await puppeteer.launch(constants.PUPPETEER_OPTS)
@@ -39,7 +41,10 @@ try{
       window.tg.calculatedItems.forEach(element => {
        // debugger;
         element.href=element.selected.href;
-        element.selected.click();
+        /*
+        Nos ncesario hacr este click
+        */
+        //element.selected.click();
       });
       /************************ */
       return window.tg.calculatedItems;
@@ -49,9 +54,18 @@ try{
     console.log("Se acabó lo que se daba 1")
   }
 
-    console.log(data);
+    // console.log(data);
     //Evento generado con lo datos para tratarlos en otro punto 
     eventEmitter.emit("scrapedDataEvent",data);
+
+
+
+
+
+
+
+
+    
 
     try{
       //Busco el segundo boton de paginacion
