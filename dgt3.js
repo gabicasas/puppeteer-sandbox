@@ -44,7 +44,7 @@ try{
         /*
         Nos ncesario hacr este click
         */
-        //element.selected.click();
+        element.selected.click();
       });
       /************************ */
       return window.tg.calculatedItems;
