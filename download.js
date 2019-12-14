@@ -24,6 +24,7 @@ function download(globalVar, eventEmitter) {
 
         //  debugger;
         const constants = require('./constants.js')
+        const request = require('request');
         const puppeteer = require('puppeteer-core');
         const fs = require('fs')
         const keyboardMapping = require('./USKeyboardLayout.js');
@@ -33,6 +34,7 @@ function download(globalVar, eventEmitter) {
         const download = require('download-pdf')
 
         await page.goto(urlTarget);
+        let cookies = await page.cookies();
         try {
           await page.waitForSelector("a")
           page.exposeFunction('puppeteerMutationListener', function (value) {
@@ -40,22 +42,36 @@ function download(globalVar, eventEmitter) {
             //console.log(globalVar);
             eventEmitter.emit('changeData', value);
           });
-          eventEmitter.on('changeData', (data) => {
+          eventEmitter.on('changeData',async (data) => {
             //debugger
-            console.log(data);
+            //console.log(data);
             //page.goto(data);
             var pdf = data
+           
             
-           var options = {
+            cookie_str = "";
+            for(var i = 0; i < cookies.length; i+=1){
+                  a = cookies[i];
+                  cookie_str += a.name + "=" + a.value + ";";
+            }
+            // console.log(cookie_str);
+            request.get({
+              url: pdf,
+              headers: {
+                  "cookie": cookie_str,
+              }
+          }).pipe(fs.createWriteStream("./pdf/"+Math.random()+".pdf"))
+       
+          /* var options = {
                directory: "C:/Users/gcc16488/Documents/",
                filename: Math.random().toString()+".pdf"
            }
             
-           /*download(pdf, options, function(err){
+           download(pdf, options, function(err){
                if (err)
                 throw err
                console.log("meow")
-           })*/ 
+           })*/
 
             browser.close();
           })

@@ -32,7 +32,7 @@ try{
 while(true){
   let data;
 try{
-    page.exposeFunction('downloadPDF', function (elem) { return elem; });
+    //page.exposeFunction('downloadPDF', function (elem) { return elem; });
     await page.evaluate(fs.readFileSync('./TemplateGenerator.js', 'utf8'));
      data = await page.evaluate(element => {
       window.tg = (new TemplateGenerator({ "customFunction": "downloadPDF", "selector": "A:nth-child(1)", "selectorDom": [{ "tag": "A", "child": 0 }], "nodes": [{ "node": {}, "value": "Ayuntamiento de Pamplona\n\nEdicto de notificación de denuncias.", "fixed": true }, { "node": {}, "value": "\n\t\t\t\t\t\t\t\t\t" }] }));
@@ -44,7 +44,7 @@ try{
         /*
         Nos ncesario hacr este click
         */
-        element.selected.click();
+        //element.selected.click();
       });
       /************************ */
       return window.tg.calculatedItems;
