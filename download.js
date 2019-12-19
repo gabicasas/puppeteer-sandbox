@@ -6,7 +6,7 @@ function download(globalVar, eventEmitter) {
 
   eventEmitter.on('scrapedDataEvent', async (data) => {
     global.inUse = true;
-    console.log("Capturo evento");
+    console.log("Capturo evento "+data.length);
     for (let i in data) {
       let pageData = data[i];
      
