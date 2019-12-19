@@ -4,20 +4,17 @@ function download(globalVar, eventEmitter) {
   globalVar.urls = {};
   global.inUse = false;
 
-  eventEmitter.on('scrapedDataEvent', (data) => {
+  eventEmitter.on('scrapedDataEvent', async (data) => {
     global.inUse = true;
     console.log("Capturo evento");
     for (let i in data) {
       let pageData = data[i];
-      if(globalVar.urls[pageData.href]==undefined)
-        globalVar.urls[pageData.href] = { href: pageData.href, downloaded: false };
-    }
+     
+    
     // console.log(pageData.href);
-    (async () => {
-      for (var i in globalVar.urls) {
-        if(!globalVar.urls[i].downloaded){
-          globalVar.urls[i].downloaded=true;
-        let urlTarget=globalVar.urls[i].href
+    //(async () => {
+     
+        let urlTarget=pageData.href
         // data.forEach(async pageData => {
         //debugger; 
         //console.log(pageData.href);
@@ -33,9 +30,10 @@ function download(globalVar, eventEmitter) {
         const navigationPromise = page.waitForNavigation()
         const download = require('download-pdf')
 
-        await page.goto(urlTarget);
-        let cookies = await page.cookies();
+       
         try {
+          await page.goto(urlTarget);
+          let cookies = await page.cookies();
           await page.waitForSelector("a")
           page.exposeFunction('puppeteerMutationListener', function (value) {
             globalVar['page'] = value;
@@ -62,17 +60,7 @@ function download(globalVar, eventEmitter) {
               }
           }).pipe(fs.createWriteStream("./pdf/"+Math.random()+".pdf"))
        
-          /* var options = {
-               directory: "C:/Users/gcc16488/Documents/",
-               filename: Math.random().toString()+".pdf"
-           }
-            
-           download(pdf, options, function(err){
-               if (err)
-                throw err
-               console.log("meow")
-           })*/
-
+         
             browser.close();
           })
 
@@ -81,19 +69,22 @@ function download(globalVar, eventEmitter) {
             puppeteerMutationListener(links[0].href);
 
 
-          })
+          }).catch(e => {console.log("Sin enlace"); console.log(e);browser.close()});
         } catch (e) {
           debugger;
+          console.log(e);
+          browser.close();
+          
         }
 
 
 
       }
 
-      }
+      
 
-      // });
-    })()
+     
+   // )()}
   }
 );
 }

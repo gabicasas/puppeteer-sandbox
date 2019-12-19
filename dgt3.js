@@ -32,6 +32,7 @@ try{
 while(true){
   let data;
 try{
+  
     //page.exposeFunction('downloadPDF', function (elem) { return elem; });
     await page.evaluate(fs.readFileSync('./TemplateGenerator.js', 'utf8'));
      data = await page.evaluate(element => {
@@ -80,7 +81,10 @@ try{
     }
     await navigationPromise
 
-    await page.setViewport({ width: 1600, height: 403 })
+    await page.setViewport({ width: 1600, height: 803 })
+    console.log("Espera 45 segundos")
+  await page.waitFor(45000)
+  console.log("Fin Espera");
   }
 }catch(e){
   console.log("Se acabó lo que se daba")
