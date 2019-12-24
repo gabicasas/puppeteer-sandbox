@@ -1,6 +1,7 @@
 function download(globalVar, eventEmitter) {
   globalVar.urls = {};
   global.inUse = false;
+  let browser =null;
 
   eventEmitter.on("scrapedDataEvent", async data => {
     global.inUse = true;
@@ -14,7 +15,7 @@ function download(globalVar, eventEmitter) {
       const puppeteer = require("puppeteer-core");
       
       const keyboardMapping = require("./USKeyboardLayout.js");
-      const browser = await puppeteer.launch(constants.PUPPETEER_OPTS);
+      browser = await puppeteer.launch(constants.PUPPETEER_OPTS);
       const page = await browser.newPage();
       const navigationPromise = page.waitForNavigation();
       const download = require("download-pdf");

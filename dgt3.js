@@ -30,6 +30,7 @@ function dgt3(globalVar, eventEmitter) {
 
 try{
 while(true){
+//  for(let i=0;i<1;i++){
   let data;
 try{
   
