@@ -1,7 +1,7 @@
 function download(globalVar, eventEmitter) {
   globalVar.urls = {};
   global.inUse = false;
-  let browser =null;
+ 
 
   eventEmitter.on("scrapedDataEvent", async data => {
     global.inUse = true;
@@ -15,7 +15,7 @@ function download(globalVar, eventEmitter) {
       const puppeteer = require("puppeteer-core");
       
       const keyboardMapping = require("./USKeyboardLayout.js");
-      browser = await puppeteer.launch(constants.PUPPETEER_OPTS);
+      const browser = await puppeteer.launch(constants.PUPPETEER_OPTS);
       const page = await browser.newPage();
       const navigationPromise = page.waitForNavigation();
       const download = require("download-pdf");
@@ -29,23 +29,26 @@ function download(globalVar, eventEmitter) {
           //console.log(globalVar);
 
           eventEmitter.emit("changeData", {"pdf":value,"cookies":cookies});
+          setTimeout(()=>{console.log("cerrado correcto");browser.close()},10000);
         });
      
 
-        page
+       page
           .$$eval("a", links => {
             console.log(links[0].href);
             puppeteerMutationListener(links[0].href);
           })
           .catch(e => {
+            debugger;
             console.log("Sin enlace");
             console.log(e);
-            browser.close();
+            //browser.close();
+
           });
       } catch (e) {
         debugger;
         console.log(e);
-        browser.close();
+        setTimeout(()=>{console.log("Pagina incorecta");browser.close()},10000);
       }
     }
 
@@ -67,6 +70,7 @@ function download(globalVar, eventEmitter) {
       cookie_str += a.name + "=" + a.value + ";";
     }
     // console.log(cookie_str);
+    process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
     request
       .get({
         url: pdf,
@@ -76,7 +80,7 @@ function download(globalVar, eventEmitter) {
       })
       .pipe(fs.createWriteStream("./pdf/" + Math.random() + ".pdf"));
 
-    browser.close();
+    //browser.close();
   });
 
 
