@@ -1,6 +1,7 @@
 function download(globalVar, eventEmitter) {
   globalVar.urls = {};
   global.inUse = false;
+  global.name=0;
  
 
   eventEmitter.on("scrapedDataEvent", async data => {
@@ -27,8 +28,8 @@ function download(globalVar, eventEmitter) {
         page.exposeFunction("puppeteerMutationListener", function(value) {
           globalVar["page"] = value;
           //console.log(globalVar);
-
-          eventEmitter.emit("changeData", {"pdf":value,"cookies":cookies});
+          global.name++;
+          eventEmitter.emit("changeData", {"pdf":value,"cookies":cookies,name:global.name+".pdf"});
           setTimeout(()=>{console.log("cerrado correcto");browser.close()},10000);
         });
      
@@ -78,7 +79,7 @@ function download(globalVar, eventEmitter) {
           cookie: cookie_str
         }
       })
-      .pipe(fs.createWriteStream("./pdf/" + Math.random() + ".pdf"));
+      .pipe(fs.createWriteStream("./pdf/" +data.name));
 
     //browser.close();
   });
