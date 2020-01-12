@@ -83,8 +83,8 @@ try{
     await navigationPromise
 
     await page.setViewport({ width: 1600, height: 803 })
-    console.log("Espera 90 segundos")
-  await page.waitFor(90000)
+    console.log("Espera 45 segundos")
+  await page.waitFor(45000)
   console.log("Fin Espera");
   }
 }catch(e){
