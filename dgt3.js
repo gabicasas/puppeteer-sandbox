@@ -41,7 +41,8 @@ function dgt3(globalVar, eventEmitter) {
  
     
 
-     await page.keyboard.type("10-03-2020")
+     //await page.keyboard.type("10-03-2020")
+     await page.keyboard.type(globalVar.dateIni)
 
      //Presionamobs enter para lanzar
      await page.keyboard.press(keyboardMapping.keyCodeLayout[13].code)
@@ -60,7 +61,8 @@ for(let i =0;i<10;i++)
 
 
 
-    await page.keyboard.type("10-04-2020")
+    //await page.keyboard.type("10-04-2020")
+    await page.keyboard.type(globalVar.dateFin)
 
 
 
