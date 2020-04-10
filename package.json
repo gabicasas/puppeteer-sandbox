@@ -26,6 +26,7 @@
   "homepage": "https://github.com/gabicasas/puppeteer-sandbox#readme",
   "dependencies": {
     "download-pdf": "^0.1.6",
+    "puppeteer": "^2.0.0",
     "puppeteer-core": "^2.0.0",
     "request": "^2.88.0"
   }

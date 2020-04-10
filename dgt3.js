@@ -12,13 +12,61 @@ function dgt3(globalVar, eventEmitter) {
 
     await page.goto("https://sedeapl.dgt.gob.es/WEB_TTRA_CONSULTA/Todos.faces?idioma=es")
 
+    //await page.goto("https://sedeapl.dgt.gob.es/WEB_TTRA_CONSULTA/TablonEdictosPublico.faces")
+
     await page.setViewport({ width: 1600, height: 803 })
 
 
 
     await page.keyboard.down(keyboardMapping.keyCodeLayout[118].code)
 
+    //Abre el buscador avanzado
+    await page.waitForSelector("body > DIV:nth-child(1) > DIV:nth-child(1) > DIV:nth-child(1) > DIV:nth-child(2) > DIV:nth-child(1) > DIV:nth-child(7) > DIV:nth-child(1) > DIV:nth-child(2) > FORM:nth-child(3) > INPUT:nth-child(2)");
+    await page.click("body > DIV:nth-child(1) > DIV:nth-child(1) > DIV:nth-child(1) > DIV:nth-child(2) > DIV:nth-child(1) > DIV:nth-child(7) > DIV:nth-child(1) > DIV:nth-child(2) > FORM:nth-child(3) > INPUT:nth-child(2)");
+     
+     await navigationPromise
 
+
+     //Selecciona fecha inicio
+     await page.waitForSelector("body > DIV:nth-child(1) > DIV:nth-child(1) > DIV:nth-child(1) > DIV:nth-child(2) > DIV:nth-child(1) > DIV:nth-child(7) > DIV:nth-child(1) > DIV:nth-child(2) > FORM:nth-child(5) > DIV:nth-child(4) > DIV:nth-child(3) > DIV:nth-child(1) > INPUT:nth-child(2)");
+     await page.click("body > DIV:nth-child(1) > DIV:nth-child(1) > DIV:nth-child(1) > DIV:nth-child(2) > DIV:nth-child(1) > DIV:nth-child(7) > DIV:nth-child(1) > DIV:nth-child(2) > FORM:nth-child(5) > DIV:nth-child(4) > DIV:nth-child(3) > DIV:nth-child(1) > INPUT:nth-child(2)");
+
+
+     //Borrar el campo situando el puntero
+    for(let i =0;i<10;i++)
+      await page.keyboard.press(keyboardMapping.keyCodeLayout[37].code)
+  for(let i =0;i<10;i++)  
+      await page.keyboard.press(keyboardMapping.keyCodeLayout[46].code)
+     
+ 
+    
+
+     await page.keyboard.type("10-03-2020")
+
+     //Presionamobs enter para lanzar
+     await page.keyboard.press(keyboardMapping.keyCodeLayout[13].code)
+     await navigationPromise
+
+      //Selecciona fecha fin 
+     await page.waitForSelector("body > DIV:nth-child(1) > DIV:nth-child(1) > DIV:nth-child(1) > DIV:nth-child(2) > DIV:nth-child(1) > DIV:nth-child(7) > DIV:nth-child(1) > DIV:nth-child(2) > FORM:nth-child(5) > DIV:nth-child(4) > DIV:nth-child(3) > DIV:nth-child(2) > INPUT:nth-child(2)");
+     await page.click("body > DIV:nth-child(1) > DIV:nth-child(1) > DIV:nth-child(1) > DIV:nth-child(2) > DIV:nth-child(1) > DIV:nth-child(7) > DIV:nth-child(1) > DIV:nth-child(2) > FORM:nth-child(5) > DIV:nth-child(4) > DIV:nth-child(3) > DIV:nth-child(2) > INPUT:nth-child(2)");
+
+
+       //Borrar el campo situando el puntero
+    for(let i =0;i<10;i++)
+    await page.keyboard.press(keyboardMapping.keyCodeLayout[37].code)
+for(let i =0;i<10;i++)  
+    await page.keyboard.press(keyboardMapping.keyCodeLayout[46].code)
+
+
+
+    await page.keyboard.type("10-04-2020")
+
+
+
+    //Presionamobs enter para lanzar formulario
+    await page.keyboard.press(keyboardMapping.keyCodeLayout[13].code)
+    await navigationPromise
 
     /** Setea descarga (no se si funciona)*/
     await page._client.send('Page.setDownloadBehavior', {
