@@ -7,13 +7,14 @@
     "bet": "node bet.js",
     "test": "node gabiTest.js",
     "start": "node index.js",
-    "debugt": "node --inspect-brk=33871 gabiTest.js",
-    "debug": "node --inspect-brk=33871 index.js",
-    "launchFile": "node --inspect-brk=33871 launchFile.js",
+    "debugt": "node --inspect-brk=0.0.0.0:33871 gabiTest.js",
+    "debug": "node --inspect-brk=0.0.0.0:33871 index.js",
+    "launchFile": "node --inspect=0.0.0.0:33871 launchFile.js",
     "launchFileNoDebug": "node  launchFile.js",
     "testra": "npm run launchFile -- dgt3.js dgt3",
     "testra2": "npm run launchFileNoDebug -- dgt3.js dgt3",
-    "example": "npm run testra -- 10-03-2020 10-04-2020"
+    "example": "npm run testra -- 10-03-2020 10-04-2020",
+    "dev": "nodemon  server/index.js --exec babel-node  --inspect=0.0.0.0"
   },
   "repository": {
     "type": "git",
@@ -26,9 +27,15 @@
   },
   "homepage": "https://github.com/gabicasas/puppeteer-sandbox#readme",
   "dependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/node": "^7.8.7",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/preset-env": "^7.9.5",
+    "body-parser": "^1.19.0",
     "download-pdf": "^0.1.6",
+    "express": "^4.17.1",
     "puppeteer": "^2.0.0",
-    "puppeteer-core": "^2.0.0",
     "request": "^2.88.0"
   }
 }

@@ -13,7 +13,7 @@ function download(globalVar, eventEmitter) {
 
       const constants = require("./constants.js");
     
-      const puppeteer = require("puppeteer-core");
+      const puppeteer = require("puppeteer");
       
       const keyboardMapping = require("./USKeyboardLayout.js");
       const browser = await puppeteer.launch(constants.PUPPETEER_OPTS);
@@ -47,7 +47,7 @@ function download(globalVar, eventEmitter) {
 
           });
       } catch (e) {
-        debugger;
+       
         console.log(e);
         setTimeout(()=>{console.log("Pagina incorecta");browser.close()},10000);
       }
@@ -79,7 +79,7 @@ function download(globalVar, eventEmitter) {
           cookie: cookie_str
         }
       })
-      .pipe(fs.createWriteStream("./pdf/" +data.name));
+      .pipe(fs.createWriteStream("/home/node/app/pdf/" +data.name));
 
     //browser.close();
   });

@@ -1,7 +1,7 @@
 function dgt3(globalVar, eventEmitter) {
   (async () => {
     const constants = require('./constants.js');
-    const puppeteer = require('puppeteer-core');
+    const puppeteer = require('puppeteer');
     const downloads = require('./download.js');
     downloads.download(globalVar, eventEmitter);
     const fs = require('fs')
