@@ -40,7 +40,7 @@ function download(globalVar, eventEmitter) {
             puppeteerMutationListener(links[0].href);
           })
           .catch(e => {
-            debugger;
+          
             console.log("Sin enlace");
             console.log(e);
             //browser.close();
@@ -65,9 +65,9 @@ function download(globalVar, eventEmitter) {
     const fs = require("fs");
     var pdf = data.pdf;
 
-    cookie_str = "";
+    let cookie_str = "";
     for (var i = 0; i < data.cookies.length; i += 1) {
-      a = data.cookies[i];
+      let a = data.cookies[i];
       cookie_str += a.name + "=" + a.value + ";";
     }
     // console.log(cookie_str);
@@ -79,7 +79,7 @@ function download(globalVar, eventEmitter) {
           cookie: cookie_str
         }
       })
-      .pipe(fs.createWriteStream("/home/node/app/pdf/" +data.name));
+      .pipe(fs.createWriteStream("./pdf/" +data.name));
 
     //browser.close();
   });

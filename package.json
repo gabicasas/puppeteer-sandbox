@@ -14,7 +14,8 @@
     "testra": "npm run launchFile -- dgt3.js dgt3",
     "testra2": "npm run launchFileNoDebug -- dgt3.js dgt3",
     "example": "npm run testra -- 10-03-2020 10-04-2020",
-    "dev": "nodemon  server/index.js --exec babel-node  --inspect=0.0.0.0"
+    "dev": "nodemon  server/index.js --exec babel-node  --inspect=0.0.0.0",
+    "server": "babel-node server/index.js" 
   },
   "repository": {
     "type": "git",

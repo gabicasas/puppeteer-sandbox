@@ -33,7 +33,7 @@ RUN npm install
 COPY --chown=node:node . .
 
 
-ENTRYPOINT [ "npm", "run" ,"testra" ,"--", "10-03-2020" , "10-03-2020" ]
+ENTRYPOINT [ "npm", "run" ,"server"]
 
 #docker build -t test .
 # docker run --rm -d -p 3007:3000 -p 33871:33871 -v //c/pdf:/home/node/app/pdf puppeteersandbox:latest 
