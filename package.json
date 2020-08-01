@@ -13,9 +13,9 @@
     "launchFileNoDebug": "node  launchFile.js",
     "testra": "npm run launchFile -- dgt3.js dgt3",
     "testra2": "npm run launchFileNoDebug -- dgt3.js dgt3",
-    "example": "npm run testra -- 10-03-2020 10-04-2020",
+    "example": "npm run testra -- 01-08-2020 10-04-2020",
     "dev": "nodemon  server/index.js --exec babel-node  --inspect=0.0.0.0",
-    "server": "babel-node server/index.js" 
+    "server": "babel-node server/index.js"
   },
   "repository": {
     "type": "git",
@@ -36,6 +36,7 @@
     "body-parser": "^1.19.0",
     "download-pdf": "^0.1.6",
     "express": "^4.17.1",
+    "nodemon": "^2.0.4",
     "puppeteer": "^2.0.0",
     "request": "^2.88.0"
   }

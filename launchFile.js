@@ -14,7 +14,7 @@ let paramToSaveData={};
     
     try {
       
-        fs.writeFileSync('./pdf/sync.txt', 'anni', { mode: 0o755 });
+       // fs.writeFileSync('./pdf/sync.txt', 'anni', { mode: 0o755 });
         console.log("Fihero escrito")
       } catch(err) {
         // An error occurred

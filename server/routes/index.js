@@ -29,14 +29,7 @@ router.post('/',(req,res)=>{
   
       console.log("FECHA INICIAL "+ paramToSaveData.dateIni + " FECHA FINAL  " + paramToSaveData.dateFin)
       
-      try {
-        
-          fs.writeFileSync('./pdf/sync.txt', 'anni', { mode: 0o755 });
-          console.log("Fihero escrito")
-        } catch(err) {
-          // An error occurred
-          console.error(err);
-        }
+      
      
      
       dgt3(paramToSaveData,eventEmitter);
