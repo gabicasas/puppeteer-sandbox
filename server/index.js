@@ -22,5 +22,5 @@ app.use('/static', express.static(__dirname + '/static'));
 app.use('/', indexRoutes);
 app.listen(app.get('port'), () => {
     console.log(`server on port ${app.get('port')}`);
-    console.log("Ficheros estaticos en "+__dirname + '/public');
+    console.log("Ficheros estaticos en "+__dirname + '/static');
   });

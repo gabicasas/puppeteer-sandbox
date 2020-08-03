@@ -83,10 +83,17 @@ while(true){
 //  for(let i=0;i<1;i++){
   let data;
 try{
-  
+  await page.waitForNavigation();
     //page.exposeFunction('downloadPDF', function (elem) { return elem; });
-    await page.evaluate(fs.readFileSync('./TemplateGenerator.js', 'utf8'));
+    let script=fs.readFileSync('./TemplateGenerator.js', 'utf8');
+    console.log(script);
+    try{
+    await page.evaluate(script);
+    }catch(e2){
+      console.log("Falla evaluate: "+e2)
+    }
      data = await page.evaluate(element => {
+       debugger;
       window.tg = (new TemplateGenerator({ "customFunction": "downloadPDF", "selector": "A:nth-child(1)", "selectorDom": [{ "tag": "A", "child": 0 }], "nodes": [{ "node": {}, "value": "Ayuntamiento de Pamplona\n\nEdicto de notificación de denuncias.", "fixed": true }, { "node": {}, "value": "\n\t\t\t\t\t\t\t\t\t" }] }));
       window.tg.staticData();
       /***************** */
@@ -103,7 +110,7 @@ try{
     })
 
   }catch(e){
-    console.log("Se acabó lo que se daba 1")
+    console.log("Se acabó lo que se daba 1"+e)
   }
 
     // console.log(data);
